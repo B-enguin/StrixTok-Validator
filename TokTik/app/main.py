@@ -3,6 +3,7 @@ from flask_cors import CORS
 
 import torch
 from torch import nn
+from torchvision import transforms
 import torchvision.transforms as transforms
 import torch.nn.functional as F
 import numpy as np
@@ -10,11 +11,6 @@ import open_clip
 from sentence_transformers import util
 from PIL import Image
 from models.clipseg import CLIPDensePredT
-from PIL import Image
-from torchvision import transforms
-import numpy as np
-import open_clip
-from sentence_transformers import util
 import cv2
 import urllib.request
 
@@ -38,6 +34,7 @@ clip.to(device)
 
 print(device)
 
+# Similarity Metrics
 def imageEncoder(img):
     img1 = Image.fromarray(img).convert('RGB')
     img1 = preprocess(img1).unsqueeze(0).to(device)
@@ -50,6 +47,7 @@ def generateScore(image1, image2):
     score = round(float(cos_scores[0][0])*100, 2)
     return score
 
+# Common Transforms
 transform = transforms.Compose([
     transforms.ToTensor(),
     transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
@@ -73,6 +71,7 @@ def predict():
     query_List =[]
     target_List = []
 
+    # Fetch Images from line
     for j in json_instances:
         resp = urllib.request.urlopen(j['query'])
         image = np.asarray(bytearray(resp.read()), dtype="uint8")
