@@ -1,0 +1,16 @@
+Flask
+Flask-Cors
+Flask-RESTful
+gunicorn
+numpy
+opencv-python
+open_clip_torch
+sentence_transformers
+
+clip @ git+https://github.com/openai/CLIP.git@a1d071733d7111c9c014f024669f959182114e33
+
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==1.11.0
+
+--extra-index-url https://download.pytorch.org/whl/cpu
+torchvision
